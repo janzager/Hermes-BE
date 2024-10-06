@@ -1,5 +1,6 @@
 package de.brokenstudio.hermes.rest.access;
 
+import de.brokenstudio.hermes.app.Application;
 import de.brokenstudio.hermes.database.DatabaseConnector;
 import de.brokenstudio.hermes.rest.access.exceptions.InvalidPasswordException;
 import de.brokenstudio.hermes.rest.access.exceptions.NoUserFoundException;
@@ -71,7 +72,7 @@ public class AuthHandler {
     }
 
     public boolean changePassword(UUID token, String oldPassword, String newPassword) throws NoUserFoundException, SamePasswordException, InvalidPasswordException {
-        String username = SessionHandler.getInstance().getUsername(token);
+        String username = Application.app().getSessionHandler().getUsername(token);
         try(Connection connection = DatabaseConnector.getInstance().getConnection()){
             PreparedStatement statement = connection.prepareStatement("SELECT password, salt FROM users WHERE username=?");
             statement.setString(1, username);
