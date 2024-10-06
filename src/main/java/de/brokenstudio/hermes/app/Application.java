@@ -4,12 +4,11 @@ import de.brokenstudio.hermes.config.Config;
 import de.brokenstudio.hermes.rest.RestManager;
 import lombok.Getter;
 
+@Getter
 public class Application {
 
     private static Application app;
-    @Getter
     private Config config;
-    @Getter
     private RestManager restManager;
 
     private void init(){

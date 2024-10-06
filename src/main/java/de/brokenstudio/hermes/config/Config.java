@@ -32,6 +32,7 @@ public class Config {
 
         private String host;
         private int port;
+        private String database;
         private String user;
         private String password;
         private boolean ssl;
@@ -39,9 +40,10 @@ public class Config {
         public Database() {
         }
 
-        public Database(String host, int port, String user, String password, boolean ssl) {
+        public Database(String host, int port, String database, String user, String password, boolean ssl) {
             this.host = host;
             this.port = port;
+            this.database = database;
             this.user = user;
             this.password = password;
             this.ssl = ssl;
@@ -65,6 +67,10 @@ public class Config {
 
         public boolean isSsl() {
             return ssl;
+        }
+
+        public String getDatabase() {
+            return database;
         }
     }
 
@@ -95,7 +101,7 @@ public class Config {
                 FileWriter writer = new FileWriter(file);
                 writer.write(Json.gson.toJson(new Config(
                         new Application("localhost",7070),
-                        new Database("localhost",5432, "foo", "bar", false)
+                        new Database("localhost",5432, "hermes", "foo", "bar", false)
                 )));
             } catch (IOException e) {
                 throw new RuntimeException(e);
