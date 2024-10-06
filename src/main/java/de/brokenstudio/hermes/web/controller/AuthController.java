@@ -1,6 +1,7 @@
 package de.brokenstudio.hermes.web.controller;
 
 import de.brokenstudio.hermes.app.Application;
+import de.brokenstudio.hermes.rest.access.Role;
 import de.brokenstudio.hermes.rest.access.exceptions.InvalidPasswordException;
 import de.brokenstudio.hermes.rest.access.exceptions.NoUserFoundException;
 import de.brokenstudio.hermes.rest.access.exceptions.SamePasswordException;
@@ -28,7 +29,6 @@ public class AuthController {
             ctx.status(201).result("User created");
         } catch (UserAlreadyExistsException e) {
             ctx.status(409).result("User already exists");
-            return;
         }
     }
 
@@ -48,7 +48,7 @@ public class AuthController {
         ctx.status(200).result(token.toString());
     }
 
-    @Post("/change-password")
+    @Post(value = "/change-password", access = Role.USER)
     public void changePassword(Context ctx) {
         ChangePasswordDTO dto = ctx.bodyAsClass(ChangePasswordDTO.class);
         if (dto.getUsername() == null || dto.getOldPassword() == null || dto.getNewPassword() == null || dto.getUsername().isEmpty() || dto.getOldPassword().isEmpty() || dto.getNewPassword().isEmpty()) {

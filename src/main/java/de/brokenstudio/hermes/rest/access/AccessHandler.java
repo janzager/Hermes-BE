@@ -3,6 +3,7 @@ package de.brokenstudio.hermes.rest.access;
 import de.brokenstudio.hermes.app.Application;
 import io.javalin.http.Context;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class AccessHandler {
@@ -17,7 +18,10 @@ public class AccessHandler {
             Role role = Application.app().getRoleHandler().getRole(Application.app().getSessionHandler().getUsername(token));
             if(role == null)
                 return false;
-            return ctx.routeRoles().contains(role);
+            if(new ArrayList<>(ctx.routeRoles()).get(0) == null)
+                return false;
+            return ((Role) new ArrayList<>(ctx.routeRoles()).get(0)).level <= role.level;
+
         } catch (IllegalArgumentException | NullPointerException e) {
             return false;
         }
