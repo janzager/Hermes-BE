@@ -103,6 +103,8 @@ public class Config {
                         new Application("localhost",7070),
                         new Database("localhost",5432, "hermes", "foo", "bar", false)
                 )));
+                writer.flush();
+                writer.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
