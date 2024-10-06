@@ -16,23 +16,23 @@ public class SessionHandler {
         tokenLife = new HashMap<>();
     }
 
-    public UUID getToken(String userrname){
+    public UUID getToken(String username){
         UUID uuid = generateUUID();
-        tokens.put(uuid, userrname);
+        tokens.put(uuid, username);
         tokenLife.put(uuid, System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
         return uuid;
     }
 
-    public boolean checkToken(String username, UUID uuid){
-        if(isTokenValid(username, uuid)){
+    public boolean checkToken(UUID uuid){
+        if(isTokenValid(uuid)){
             tokenLife.put(uuid, System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
             return true;
         }
         return false;
     }
 
-    private boolean isTokenValid(String username, UUID uuid){
-        return tokens.containsKey(uuid) && tokens.get(uuid).equals(username) && tokenLife.get(uuid) > System.currentTimeMillis();
+    private boolean isTokenValid(UUID uuid){
+        return tokens.containsKey(uuid) && tokenLife.get(uuid) > System.currentTimeMillis();
     }
 
 
