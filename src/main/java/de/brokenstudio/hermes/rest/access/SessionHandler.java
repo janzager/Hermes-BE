@@ -35,6 +35,10 @@ public class SessionHandler {
         return tokens.containsKey(uuid) && tokenLife.get(uuid) > System.currentTimeMillis();
     }
 
+    public String getUsername(UUID uuid){
+        return tokens.get(uuid);
+    }
+
 
 
     private UUID generateUUID(){
