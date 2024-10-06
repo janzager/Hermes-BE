@@ -6,12 +6,10 @@ import java.util.concurrent.TimeUnit;
 
 public class SessionHandler {
 
-    private static SessionHandler instance;
-
     private final HashMap<UUID, String> tokens;
     private final HashMap<UUID, Long> tokenLife;
 
-    private SessionHandler(){
+    public SessionHandler(){
         tokens = new HashMap<>();
         tokenLife = new HashMap<>();
     }
@@ -45,12 +43,4 @@ public class SessionHandler {
         UUID uuid = UUID.randomUUID();
         return tokens.containsKey(uuid) ? generateUUID() : uuid;
     }
-
-    public static SessionHandler getInstance(){
-        if(instance == null){
-            instance = new SessionHandler();
-        }
-        return instance;
-    }
-
 }

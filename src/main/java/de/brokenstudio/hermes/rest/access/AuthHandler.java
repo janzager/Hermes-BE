@@ -18,8 +18,6 @@ import java.util.UUID;
 
 public class AuthHandler {
 
-    private static AuthHandler instance;
-
     public AuthHandler(){
         setupDatabase();
     }
@@ -120,13 +118,6 @@ public class AuthHandler {
         byte[] result = new byte[32];
         generator.generateBytes(password.getBytes(StandardCharsets.UTF_8), result, 0, result.length);
         return result;
-    }
-
-    public static AuthHandler getInstance() {
-        if (instance == null) {
-            instance = new AuthHandler();
-        }
-        return instance;
     }
 
 }

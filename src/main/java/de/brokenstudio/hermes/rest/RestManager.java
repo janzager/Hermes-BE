@@ -1,5 +1,7 @@
 package de.brokenstudio.hermes.rest;
 
+import de.brokenstudio.hermes.rest.access.AccessHandler;
+import de.brokenstudio.hermes.rest.access.exceptions.UserAlreadyExistsException;
 import de.brokenstudio.hermes.rest.annotations.*;
 import de.brokenstudio.hermes.util.AppAccessor;
 import de.brokenstudio.hermes.util.Json;
@@ -34,6 +36,11 @@ public class RestManager implements AppAccessor {
             config.jsonMapper(gsonMapper);
             //TODO replace with actual cors rules
             config.bundledPlugins.enableCors(cors -> cors.addRule(CorsPluginConfig.CorsRule::anyHost));
+        });
+        AccessHandler accessHandler = new AccessHandler();
+        app.beforeMatched(ctx -> {
+           if(!accessHandler.hasAccess(ctx))
+               throw new UserAlreadyExistsException();
         });
         internalControllers();
         app.start(config().getApplication().getHost(), config().getApplication().getPort());
