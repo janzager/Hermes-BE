@@ -84,7 +84,6 @@
                     </descriptorRefs>
                     <finalName>Hermes</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <outputDirectory>/home/jan/Development</outputDirectory>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
