@@ -58,8 +58,13 @@ public class AuthController {
 
         UUID token = UUID.fromString(ctx.header("Authorization").split(" ")[1]);
         try {
-            Application.app().getAuthHandler().changePassword(token, dto.getOldPassword(), dto.getNewPassword());
-            ctx.status(200).result("Password changed");
+            if(Application.app().getAuthHandler().changePassword(token, dto.getOldPassword(), dto.getNewPassword())){
+                Application.app().getSessionHandler().invalidateAllTokens(dto.getUsername());
+                UUID newToken = Application.app().getSessionHandler().getToken(dto.getUsername());
+                ctx.status(200).result(newToken.toString());
+            }else{
+
+            }
         } catch (NoUserFoundException e) {
             ctx.status(404).result("User not found");
         } catch (SamePasswordException e) {
